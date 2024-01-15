@@ -25,7 +25,7 @@ to generate their essays and academic works with LLM, so it becomes very importa
 A.I.-generated text so that people doing their original work can be acknowledged.
 
 ## The Science of Detecting LLM-Generated Texts 🔬
-I have used this research paper on the Detection of LLM-generated texts for this section.<br><br>
+I have used [this](https://arxiv.org/abs/2303.07205) research paper on the Detection of LLM-generated texts for this section.<br><br>
 • Existing detection methods can be roughly grouped into two categories: Black-box detection
 and White-box detection. In practice, black-box detectors are commonly constructed by individual developers, whereas LLM developers generally carry out white-box detection.<br><br>
 • Black-box detection methods are limited to API-level access to LLMs. They rely on collecting
@@ -66,9 +66,9 @@ ChatGPT posts inaccurate news opinions and produces fake scientific abstracts.<b
 to label the essays as either human- or AI-generated. The dataset given to us in this competition
 is highly skewed towards one label. The original dataset only contains 3 LLM-generated text
 and 1375 human-generated samples.<br><br>
-• To tackle this problem, we have to use an external dataset. Thankfully, we don’t have to do this
+• To tackle this problem, we have to use an external dataset, or we can use API to generate essays by LLMs. Thankfully, we don’t have to do this
 step on our own; many have uploaded datasets containing balanced labels. Here is the link to
-the dataset that I have used Dataset.<br><br>
+the dataset that I have used [Dataset](https://www.kaggle.com/datasets/dsluciano/daigt-one-place-all-data).<br><br>
 • Collecting data through human effort can be time-consuming and financially impractical for
 larger datasets. An alternative strategy involves extracting text directly from human-authored
 sources, such as websites and scholarly articles.<br><br>
@@ -79,10 +79,12 @@ sources, such as websites and scholarly articles.<br><br>
 • Preprocessing is a very important step to perform before training any model based on the NLP
 tasks, as preprocessing makes the text free from useless words, such as stopwords, punctuations, numeric digits, URLs, etc., that are present in the data, while the data collection and
 can greatly affect the model’s performance.<br><br>
+
 • For the preprocessing part, I have used the SPACY library and NLTK for The stemming part,
 as lemmatising from Spacy, takes a lot of time to compile. I removed the stopwords, digits,
 punctuations, and URLs from the raw text and then used the NLTK library to perform the
 Stemming.<br><br>
+•In all of my notebooks, in order to reduce the submission time while submitting, I have preprocessed the train data, saved it as a CSV file and then used it again to save time on preprocessing.<br><br>
 
 
 ## Word Embeddings 📌
@@ -98,7 +100,7 @@ word in the vocabulary.<br><br>
 proper context and perform best in NLP-related tasks.<br><br>
 • I have used every method for this project, and the Tf-Idf seems to perform better than the others.
 Also, I have used the Byte-Pair encoding from the hugging face library, along with the Tf-Idf
-vectorizer, which gave me the best ROC-AUC score.<br><br>
+vectorizer, which gave me the best ROC-AUC score for this project.<br><br>
 
 
 
@@ -107,14 +109,19 @@ vectorizer, which gave me the best ROC-AUC score.<br><br>
 • For the model-building part, I have observed that the tree-based algorithms perform much
 better than the linear model in the case of NLP classification. Also, the Naive Bayes
 algorithms perform much better than the linear models.<br><br>
-• In the given notebook in my GitHub, I have used many different models and methods like
+• In the given notebook in my [GitHub](https://github.com/akshatshaw/LLM_txt_DETECTING), I have used many different models and methods like
 cross-validation and GridSearchCV to tune the hyperparameters.<br><br>
 • Further, I have a separate notebook in which I have used a Bi-Directional LSTM for which the
 preprocessing step is the same, but the word embedding technique for the LSTM is implemented
 in the model-building step itself.<br><br>
+• LSTM stands for Long Short-Term Memory, and these models are advanced versions of RNN-
+based networks which are specifically designed to address the vanishing gradient problem in
+traditional RNNs; LSTM layers have memory cells, which allows the network to remember or
+forget information over long periods selectively. This can be useful in NLP as context is required
+to be remembered within a sentence.<br><br>
 • However, the LSTM one does not perform better in this dataset. Finally, I used an ensemble
 model with models MultinomialNB, SGDClassifier, LGBMClassifier, and CatBoostClassifier.
-I would like to thank Zulqarnain Ali as I have used his Notebook to improve my score and learned
+I would like to thank Zulqarnain Ali as I have used his [Notebook](https://www.kaggle.com/code/zulqarnainali/llm-ensemble-model-explained-resourced/notebook) to improve my score and learned
 about the Byte-Pair encoding and the model’s hyperparameters.<br><br>
 
 
@@ -126,17 +133,25 @@ matrices i.e., the Area under the curve of the ROC curve.<br><br>
 CV score, but their leaderboard score is not as good as the CV, and I think that this is not due
 to the overfitting but it is due to the hidden test dataset which is a very different text compared
 to the train data; this is also the reason for the poor performance of the LSTMs.<br><br>
-• I think that the Host of the competition has degraded the quality of the AI-generated text in
-the hidden test set, i.e. it has more Linguistic similarity to Human written text. To tackle this
-problem, we need a dataset that has text sample generated by LLMs, which have more similarity
-to human style, thus by training on this data can improve the performance.<br><br>
+• I think that the host of the competition has degraded the quality of the AI-generated text in the hidden test set, i.e., it has more linguistic similarity to written human text. To tackle this problem, we need a dataset with text samples generated by LLMs, which are more similar to human style; thus, training on this data can improve performance.<br><br>
 
 
 ## Conclusion 🤔
 
 In Conclusion, I found that in this competition, due to the hidden data, simpler methods like Tf-Idf
 and Word2Vec tend to perform much better as compared to the LSTM-based models since much of
-the details of the writing style of Humans and AI are different in train and test datasets.
+the details of the writing style of Humans and AI are different in train and test datasets.<br><br>
+
+
+Additionally, a few of the things that can be done to improve the score are as follows:-
+• I think the test data has been tailored to be more similar to the human style of writing, as
+discussed in the above sections, so training the models with data that is more similar to humans
+but is LLM generated can help improve performance.<br><br>
+• Also, there are more grammatical mistakes in human written text as compared to AI, but the
+test data seems to have more grammatical mistakes, which the Host has purposefully done.<br><br>
+• Using advanced techniques like BERT-pre trained can improve the score as it is well-trained.<br><br>
+• Various other models can be tried with better hyperparameters, which can slightly improve the
+score.<br><br>
 
 
 ## Extras 🙌
